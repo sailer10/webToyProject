@@ -11,7 +11,7 @@ public class HelloContorller {
 	@GetMapping("/hello")
 	@ResponseBody
 	public String Hello() {
-		
+		// GetMapping, ResponseBody 테스트용...
 		return "Hello World!";
 	}
 }
