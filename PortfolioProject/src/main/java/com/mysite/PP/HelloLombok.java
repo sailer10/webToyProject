@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
-// 아래 에너테이션을 적용하고 인스턴스에 final을 붙이면 자동으로 생성자를 만들어줌
+/*
+ * 기본기능 테스트 클래스
+ *  @RequiredArgsConstructor: 인스턴스에 final을 붙이면 자동으로 생성자를 만들어줌
+ */
 @RequiredArgsConstructor
 @Getter
 @Setter
