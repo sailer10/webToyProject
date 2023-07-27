@@ -9,7 +9,7 @@ import lombok.Setter;
 /***
  * 
  * @author tpdlf
- * 입력값 검증을 위한 form 클래스. 전달한 입력값 바인딩시에도 사용
+ * @summary 입력값 검증을 위한 form 클래스. 전달한 입력값 바인딩시에도 사용
  */
 @Getter
 @Setter
