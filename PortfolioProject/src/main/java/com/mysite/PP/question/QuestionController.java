@@ -35,12 +35,14 @@ public class QuestionController {
 	private final UserService userService;
 	
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) { 
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page
+    		, @RequestParam(value = "kw", defaultValue = "") String kw) { 
     	// model 객체는 따로 생성할 필요없이 매개변수로 지정해두면
     	// 스프링부트가 자동으로 Model 객체를 생성함
-        Page<Question> paging = this.questionService.getList(page);
+    	// 검색어가 없다면 모든 질문내용을 리턴, 
+        Page<Question> paging = this.questionService.getList(page, kw);
         model.addAttribute("paging", paging);
-    	
+    	model.addAttribute("kw", kw);
     	// "question_list" 는 question_list.html 파일을 의미함
         return "question_list";
     }
