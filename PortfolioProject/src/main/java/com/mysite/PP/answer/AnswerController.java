@@ -42,6 +42,7 @@ public class AnswerController {
         	//model 객체에 Question객체를 저장한 후 question_detail템플릿을
         	//렌더링하도록 함
         	model.addAttribute("question", question);
+        	model.addAttribute("siteUser", siteUser);
         	return "question_detail";
         }
         

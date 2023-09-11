@@ -4,7 +4,9 @@ import java.security.Principal;
 
 import com.mysite.PP.user.SiteUser;
 import com.mysite.PP.user.UserService;
+import com.mysite.PP.answer.Answer;
 import com.mysite.PP.answer.AnswerForm;
+import com.mysite.PP.answer.AnswerService;
 
 import jakarta.validation.Valid;
 
@@ -33,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
 	
 	private final QuestionService questionService;
+	private final AnswerService answerService;
 	private final UserService userService;
 	
     @GetMapping("/list")
@@ -47,14 +50,32 @@ public class QuestionController {
         return "question_list";
     }
     
+//    @GetMapping(value = "/detail/{id}")
+//    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm, 
+//    		@RequestParam(value="page", defaultValue="0") int page) {
+//    	Question question = this.questionService.getQuestion(id);
+//    	Page<Answer> paging = this.answerService.getAnswer(id, page);
+//    	model.addAttribute("question", question);
+//    	model.addAttribute("paging", paging);
+//    	return "question_detail";
+//    }
     // id 값을 얻기위해 @PathVariable 에너테이션 사용함.
     // @GetMapping 에서 "value = "는 생략 가능
+    // 댓글 페이징
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm
+    		, @RequestParam(value="page", defaultValue="0") int page) {
+    	// QuestionService의 getQuestion 메서드를 호출하여 Question객체를 템플릿에 전달
     	Question question = this.questionService.getQuestion(id);
+    	Page<Answer> paging = this.answerService.getList(question, page);
+    	
     	model.addAttribute("question", question);
+    	model.addAttribute("paging", paging);
+    	
     	return "question_detail";
     }
+    
+    
     
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
@@ -66,7 +87,9 @@ public class QuestionController {
     @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult
     		, Principal principal) {
+    	// @Valid 애너테이션을 적용하면 QuestionForm 의 @NotEmpty, @Size 응으로 설정한 검증기능이 작동한다.
     	// BindingResult 매개변수는 항상 @Valid 매개변수 바로 뒤에 위치해야 한다. 만약 2개의 매개변수의 위치가 정확하지 않다면 @Valid만 적용이 되어 입력값 검증 실패 시 400 오류가 발생한다.
+    	
     	if (bindingResult.hasErrors()) {
             return "question_form";
         }
