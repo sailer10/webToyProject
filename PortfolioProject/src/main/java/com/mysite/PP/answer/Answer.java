@@ -26,27 +26,27 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
+	@Column(columnDefinition = "TEXT")
+	private String content;
 
-    private LocalDateTime createDate;
-    
-    private LocalDateTime modifyDate;
+	private LocalDateTime createDate;
 
-    // question엔티티와 연결된 속성. DB에서 ForeignKey 관계
-    @ManyToOne	
-    private Question question;
-    
-    @ManyToOne
-    private SiteUser author;
-    
-    @ManyToMany
-    Set<SiteUser> voter;
-    
-    @OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
+	private LocalDateTime modifyDate;
+
+	// question엔티티와 연결된 속성. DB에서 ForeignKey 관계
+	@ManyToOne
+	private Question question;
+
+	@ManyToOne
+	private SiteUser author;
+
+	@ManyToMany
+	Set<SiteUser> voter;
+
+	@OneToMany(mappedBy = "answer", cascade = CascadeType.REMOVE)
 	private List<Comment> comentList;
 }

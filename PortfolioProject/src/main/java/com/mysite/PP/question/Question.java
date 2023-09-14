@@ -35,7 +35,7 @@ public class Question {
 	private String content;
 
 	private LocalDateTime createDate;
-	
+
 	private LocalDateTime modifyDate;
 
 	// mappedBy는 참조 엔티티의 속성명을 의미.
